@@ -12,7 +12,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+
+			people: [],
+
+			vehicles: [],
+
+			planets: [],
+
+			favourites: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,8 +45,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+
+			loadPeople: () => {
+				fetch("https://www.swapi.tech/api/people")
+					.then(response => response.json())
+					.then(data => setStore({ people: data["results"] }))
+					.catch(error => console.log('error', error));
+			},
+
+			loadVehicles: () => {
+				fetch("https://www.swapi.tech/api/vehicles")
+					.then(response => response.json())
+					.then(data => setStore({ vehicles: data["results"] }))
+					.catch(error => console.log('error', error));
+			},
+
+			loadPlanets: () => {
+				fetch("https://www.swapi.tech/api/planets")
+					.then(response => response.json())
+					.then(data => setStore({ planets: data["results"] }))
+					.catch(error => console.log('error', error));
+			},
+
+			addToFavourites: (resourceData, resourceType) => {
+				const store = getStore();
+
+				if (store.favorites.filter((item) => item.uid === resourceData.uid && item.resourceType === resourceType).length > 0) {
+					let newFavorites = store.favorites.filter((item) => !(item.uid === resourceData.uid && item.resourceType === resourceType))
+					setStore({ favorites: newFavorites });
+				} else {
+					setStore({ favorites: [...store.favorites, { resourceData, resourceType: resourceType }] })
+				}
+			},
 		}
+
 	};
 };
 

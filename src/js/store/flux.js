@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			planets: [],
 
-			favourites: [],
+			favorites: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -70,6 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			addToFavourites: (resourceData, resourceType) => {
 				const store = getStore();
+				console.log(resourceData, resourceType)
 
 				if (store.favorites.filter((item) => item.uid === resourceData.uid && item.resourceType === resourceType).length > 0) {
 					let newFavorites = store.favorites.filter((item) => !(item.uid === resourceData.uid && item.resourceType === resourceType))
@@ -77,6 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					setStore({ favorites: [...store.favorites, { resourceData, resourceType: resourceType }] })
 				}
+				console.log(store.favorites)
 			},
 		}
 

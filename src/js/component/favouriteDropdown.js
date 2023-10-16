@@ -10,12 +10,12 @@ export const FavouriteDropdown = () => {
 
     return(
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Favourites
         </button>
         <ul class="dropdown-menu">
-            {store.favourites.map((item, index) => (
-                <li key={index}>{item.name}</li>
+            {store.favorites.map((item, index) => (
+                <li className ="text-wrap" key={index}>{item.resourceData.name}<i className="fas fa-trash ms-1"></i></li>
             ))}
         </ul>
     </div>)

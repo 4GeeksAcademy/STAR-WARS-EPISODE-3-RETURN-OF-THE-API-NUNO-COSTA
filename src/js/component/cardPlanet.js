@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
+import { Context } from "../store/appContext";
+
 
 
 export const CardPlanet = props => {
+    const { store, actions } = useContext(Context);
     const [planet, setplanet] = useState({});
 
     useEffect(() => {
@@ -26,12 +29,6 @@ export const CardPlanet = props => {
                     <div>
                         <p className="card-text">Population: {planet.result?.properties?.population}</p>
                         <p className="card-text">Terrain: {planet.result?.properties?.terrain}</p>
-                    </div>
-                    <div>
-                        <Link to="/learnMore">
-                            <button type="button" className="btn btn-primary" >Learn More</button>
-                        </Link>
-                        <button type="button" className="btn btn-warning">Warning</button>
                     </div>
                 </div>
             </div>

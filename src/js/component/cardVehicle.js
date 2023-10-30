@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, navigate } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link, redirect, useParams } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 
 export const CardVehicle = props => {
-    const [vehicle, setvehicle] = useState({});
+    const { store, actions } = useContext(Context);
+    const [vehicle, setVehicle] = useState({});
 
     useEffect(() => {
         fetch(props.data.url)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                setvehicle(data)
+                setVehicle(data)
+                console.log(vehicle)
             })
             .catch(err => console.error(err))
     }, []);
@@ -24,15 +26,9 @@ export const CardVehicle = props => {
                 <div className="card-body">
                     <h5 className="card-title">{vehicle.result?.properties?.name}</h5>
                     <div>
-                        <p className="card-text">Crew: {vehicle.result?.properties?.crew}</p>
-                        <p className="card-text">Cost: {vehicle.result?.properties?.cost_in_credits}</p>
                         <p className="card-text">Length: {vehicle.result?.properties?.length}</p>
-                    </div>
-                    <div>
-                        <Link to="/learnMore">
-                            <button type="button" className="btn btn-primary" >Learn More</button>
-                        </Link>
-                        <button type="button" className="btn btn-warning">Warning</button>
+                        <p className="card-text">Crew: {vehicle.result?.properties?.crew}</p>
+                        <p className="card-text">Max Speed: {vehicle.result?.properties?.max_atmosphering_speed}</p>
                     </div>
                 </div>
             </div>

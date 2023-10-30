@@ -68,7 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log('error', error));
 			},
 
-			addToFavourites: (resourceData, resourceType) => {
+			addToFavorites: (resourceData, resourceType) => {
 				const store = getStore();
 				console.log(resourceData, resourceType)
 
@@ -80,6 +80,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				console.log(store.favorites)
 			},
+
+			removeFromFavorites: (resourceData) => {
+				const store = getStore();
+				
+				const indexToRemove = store.favorites.findIndex(
+				  (item) => item.uid === resourceData.uid
+				);
+				
+				if (indexToRemove !== -1) {
+				  const newFavorites = [...store.favorites];
+				  newFavorites.splice(indexToRemove, 1);
+				  setStore({ favorites: newFavorites });
+				}
+				console.log(store.favorites);
+			  },
 		}
 
 	};

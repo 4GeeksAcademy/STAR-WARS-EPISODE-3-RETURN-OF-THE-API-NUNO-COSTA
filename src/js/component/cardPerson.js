@@ -13,6 +13,7 @@ export const CardPerson = props => {
             .then(res => res.json())
             .then(data => {
                 setPerson(data)
+                console.log(person)
             })
             .catch(err => console.error(err))
     }, []);

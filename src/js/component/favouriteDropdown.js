@@ -15,7 +15,7 @@ export const FavouriteDropdown = () => {
         </button>
         <ul class="dropdown-menu">
             {store.favorites.map((item, index) => (
-                <li className ="text-wrap" key={index}>{item.resourceData.name}<i className="fas fa-trash ms-1"></i></li>
+                <li className ="text-wrap" key={index}>{item.resourceData.name}<i className="fas fa-trash ms-1" onClick={(e) => {actions.removeFromFavorites(item)} }></i></li>
             ))}
         </ul>
     </div>)

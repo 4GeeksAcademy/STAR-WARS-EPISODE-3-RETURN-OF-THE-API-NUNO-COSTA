@@ -12,10 +12,10 @@ export const ListPlanets = props => {
         <div className="d-flex-inline">
             <CardPlanet data={p} key={index} />
             <div>
-                <Link to={"/learnMorePlanets/" + index}>
+                <Link to={"/learnMorePlanets/" + p.uid}>
                     <button type="button" className="btn btn-primary" >Learn More</button>
                 </Link>
-                <button type="button" className="btn btn-warning" onClick= {(e) => actions.addToFavourites(p,"planets")}><i className="far fa-heart"></i></button>
+                <button type="button" className="btn btn-warning" onClick= {(e) => actions.addToFavorites(p,"planets")}><i className="far fa-heart"></i></button>
             </div>
         </div>
     </>

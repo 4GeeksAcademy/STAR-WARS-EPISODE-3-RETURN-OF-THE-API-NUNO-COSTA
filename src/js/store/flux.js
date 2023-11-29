@@ -47,11 +47,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			loadPeople: () => {
-				fetch("https://www.swapi.tech/api/people")
-					.then(response => response.json())
-					.then(data => setStore({ people: data["results"] }))
-					.catch(error => console.log('error', error));
+			loadPeople: async () => {
+				try {
+					const store = getStore();
+					const response = await fetch("https://www.swapi.tech/api/people");
+					const data = await response.json();
+
+					setStore({ people: data["results"] });
+					console.log("people", store.people);
+				} catch (error) {
+					console.error('Error loading people:', error);
+				}
 			},
 
 			loadVehicles: () => {
@@ -70,12 +76,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			addToFavorites: (resourceData, resourceType) => {
 				const store = getStore();
-				console.log(resourceData, resourceType)
 
-				if (store.favorites.filter((item) => item.uid === resourceData.uid && item.resourceType === resourceType).length > 0) {
-					let newFavorites = store.favorites.filter((item) => !(item.uid === resourceData.uid && item.resourceType === resourceType))
-					setStore({ favorites: newFavorites });
-				} else {
+				let duplicate = false;
+
+				if (store.favorites.filter((item) => item.uid === resourceData.uid && item.resourceType === resourceType)) {
+					duplicate = true
+				if (duplicate === true){
+					actions.removeFromFavorites(resourceData)
+				}
+				} if (duplicate === false){
 					setStore({ favorites: [...store.favorites, { resourceData, resourceType: resourceType }] })
 				}
 				console.log(store.favorites)
@@ -83,18 +92,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			removeFromFavorites: (resourceData) => {
 				const store = getStore();
-				
+
 				const indexToRemove = store.favorites.findIndex(
-				  (item) => item.uid === resourceData.uid
+					(item) => item.uid === resourceData.uid
 				);
-				
+
 				if (indexToRemove !== -1) {
-				  const newFavorites = [...store.favorites];
-				  newFavorites.splice(indexToRemove, 1);
-				  setStore({ favorites: newFavorites });
+					const newFavorites = [...store.favorites];
+					newFavorites.splice(indexToRemove, 1);
+					setStore({ favorites: newFavorites });
 				}
-				console.log(store.favorites);
-			  },
+			},
 		}
 
 	};

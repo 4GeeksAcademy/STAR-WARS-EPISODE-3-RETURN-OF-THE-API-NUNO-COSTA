@@ -23,7 +23,7 @@ export const Home = () => {
 							key={index}
 							name={p.name}
 							uid={p.uid}
-							item={p}
+							card={p}
 						/>
 					);
 				})}
@@ -35,6 +35,7 @@ export const Home = () => {
 							key={index}
 							name={p.name}
 							uid={p.uid}
+							card={p}
 						/>
 					);
 				})}
@@ -46,6 +47,7 @@ export const Home = () => {
 							key={index}
 							name={p.name}
 							uid={p.uid}
+							card={p}
 						/>
 					);
 				})}

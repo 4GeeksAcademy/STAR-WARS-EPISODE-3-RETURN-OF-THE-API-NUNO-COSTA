@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			planets: [],
 
-			favorites: [],
+			favourites: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -74,35 +74,64 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log('error', error));
 			},
 
-			addToFavorites: (resourceData, resourceType) => {
-				const store = getStore();
 
-				let duplicate = false;
+			addFavourite: (item) => {
+				let duplicate = false
+				getStore().favourites.forEach( (element) => {
+					if (item.uid == element.uid) {
+						duplicate = true
+					};
+				})
 
-				if (store.favorites.filter((item) => item.uid === resourceData.uid && item.resourceType === resourceType)) {
-					duplicate = true
-				if (duplicate === true){
-					actions.removeFromFavorites(resourceData)
-				}
-				} if (duplicate === false){
-					setStore({ favorites: [...store.favorites, { resourceData, resourceType: resourceType }] })
-				}
-				console.log(store.favorites)
+				if (!duplicate) {
+					setStore( {"favourites": [...getStore().favourites, item] })
+				};
 			},
 
-			removeFromFavorites: (resourceData) => {
-				const store = getStore();
-
-				const indexToRemove = store.favorites.findIndex(
-					(item) => item.uid === resourceData.uid
-				);
-
-				if (indexToRemove !== -1) {
-					const newFavorites = [...store.favorites];
-					newFavorites.splice(indexToRemove, 1);
-					setStore({ favorites: newFavorites });
-				}
+			deleteFavourite: (itemToDelete) => {
+				let favourites = [];
+				getStore().favourites.forEach((element) => {
+					if (element.uid != itemToDelete.uid) {
+						favourites.push(element)
+					}
+				})
+				setStore( {"favourites": favourites} )
 			},
+
+			// addToFavorites: (resourceData, resourceType) => {
+			// 	const store = getStore();
+			  
+			// 	const isDuplicate = store.favorites.forEach(
+			// 	  (item) => item.uid === resourceData.uid && item.resourceType === resourceType
+			// 	);
+			  
+			// 	if (isDuplicate) {
+			// 	  const newFavorites = store.favorites.filter(
+			// 		(item) => !(item.uid === resourceData.uid && item.resourceType === resourceType)
+			// 	  );
+			// 	  setStore({ favorites: newFavorites });
+			// 	} else {
+			// 	  setStore({
+			// 		favorites: [...store.favorites, { resourceData, resourceType: resourceType }],
+			// 	  });
+			// 	}
+			  
+			// 	console.log(store.favorites);
+			//   },
+
+			// removeFromFavorites: (resourceData) => {
+			// 	const store = getStore();
+
+			// 	const indexToRemove = store.favorites.findIndex(
+			// 		(item) => item.uid === resourceData.uid
+			// 	);
+
+			// 	if (indexToRemove !== -1) {
+			// 		const newFavorites = [...store.favorites];
+			// 		newFavorites.splice(indexToRemove, 1);
+			// 		setStore({ favorites: newFavorites });
+			// 	}
+			// },
 		}
 
 	};

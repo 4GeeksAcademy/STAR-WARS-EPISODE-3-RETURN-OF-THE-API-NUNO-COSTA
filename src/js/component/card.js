@@ -11,7 +11,8 @@ export const Card = props => {
 
     const handleToggleFavorite = (e) => {
         setIsFavorite(!isFavorite);
-        actions.addToFavorites(props.item)
+        e.preventDefault();
+        actions.addFavourite(props.card)
     }
 
 
